@@ -16,7 +16,7 @@ import { cn } from '@/lib/utils';
 
 
 import { useTRPC } from '@/trpc/client';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 const poppins = Poppins({
@@ -28,11 +28,13 @@ const poppins = Poppins({
 export const SignInView = () => {
     const router = useRouter()
     const trpc = useTRPC()
+    const queryClient = useQueryClient();
     const login = useMutation(trpc.auth.login.mutationOptions({
         onError: (error) => {
             toast.error(error.message)
         },
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.invalidateQueries(trpc.auth.session.queryFilter())
             router.push("/")
         }
     }))
@@ -55,6 +57,12 @@ export const SignInView = () => {
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-5">
+            <div className="h-screen w-full lg:col-span-2 hidden lg:block"
+                style={{
+                    backgroundImage: "url('/auth-bg.png')",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center"
+                }} />
             <div className="bg-[#F4F4F0] h-screen w-full lg:col-span-3 overflow-y-auto">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}
@@ -107,12 +115,7 @@ export const SignInView = () => {
                     </form>
                 </Form>
             </div>
-            <div className="h-screen w-full lg:col-span-2 hidden lg:block"
-                style={{
-                    backgroundImage: "url('/auth-bg.png')",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center"
-                }} />
+
 
 
         </div>
