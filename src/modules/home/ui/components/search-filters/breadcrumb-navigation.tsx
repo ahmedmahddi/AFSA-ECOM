@@ -24,7 +24,7 @@ export const BreadcrumbNavigation = ({
     return (
         <Breadcrumb>
             <BreadcrumbList>
-                {activeSubcategoryName ? (
+                {activeCategoryName ? (
                     <>
                         <BreadcrumbItem>
                             <BreadcrumbLink
