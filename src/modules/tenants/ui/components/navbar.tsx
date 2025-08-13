@@ -16,11 +16,7 @@ const CheckoutButton = dynamic(
     ),
   {
     ssr: false,
-    loading: () => (
-      <Button disabled className=" bg-white ">
-        <ShoppingCartIcon className="text-black" />
-      </Button>
-    ),
+    loading: () => null,
   }
 );
 interface Props {

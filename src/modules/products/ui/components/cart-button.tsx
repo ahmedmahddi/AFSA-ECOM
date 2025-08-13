@@ -1,3 +1,5 @@
+"use client";
+
 import { useCart } from "@/modules/checkout/hooks/use-cart";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
