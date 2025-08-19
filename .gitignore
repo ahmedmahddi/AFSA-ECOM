@@ -41,6 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 #readme files
-/.ROADMAP.md
-/.README1.md
-/.SUGGESTIONS_AND_IMPROVEMENTS.md
+ROADMAP.md
+README1.md
+SUGGESTIONS_AND_IMPROVEMENTS.md
