@@ -48,14 +48,16 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
 
   useEffect(() => {
     if (states.success) {
+      clearCart()
+      // Reset the success state to prevent infinite loops
       setStates({
         success: false,
         cancel: false
       })
-      clearCart()
       router.push("/products")
+
     }
-  }, [states.success, clearCart, router, setStates])
+  }, [states.success, clearCart, setStates, router])
 
 
 
