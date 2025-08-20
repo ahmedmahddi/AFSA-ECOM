@@ -156,7 +156,7 @@ const seed = async () => {
     collection: "users",
     data: {
       email: "admin@demo.com",
-      password: "demo",
+      password: "demo123",
       roles: ["super-admin"],
       username: "admin",
       tenants: [
