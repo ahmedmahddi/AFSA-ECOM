@@ -15,6 +15,7 @@ export const Products: CollectionConfig = {
   },
   admin: {
     useAsTitle: "name",
+    description: "You must verify your acount before creating products"
   },
   fields: [
     {
@@ -58,10 +59,10 @@ export const Products: CollectionConfig = {
       defaultValue: "30-day",
     },
     {
-      name:"content",
-      type:"textarea",
-      admin:{
-        description:"Protected content only visible to customers after purchase"
+      name: "content",
+      type: "textarea",
+      admin: {
+        description: "Protected content only visible to customers after purchase"
       }
     }
   ],
