@@ -66,7 +66,7 @@ export const Navbar = () => {
   return (
     <nav className="h-20 fixed z-50 flex top-0 backdrop-blur-lg w-full border-b justify-between font-medium bg-[#f5f5f5]/90 ">
       <Link href="/" className="pl-12 flex items-center">
-        <Image src="/afssa-logo.svg" alt="logo-afssa" width={250} height={60} />
+        <Image src="/AFSSA-logo.svg" alt="logo-afssa" width={250} height={60} />
       </Link>
       <NavbarSidebar
         items={navbarItems}
