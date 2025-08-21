@@ -11,6 +11,7 @@ interface Props {
   searchParams: Promise<SearchParams>;
   params: Promise<{ slug: string }>;
 }
+export const dynamic = "force-dynamic"
 
 const pages = async ({ params, searchParams }: Props) => {
   const { slug } = await params;
