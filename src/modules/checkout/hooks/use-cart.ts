@@ -3,7 +3,6 @@ import { useCartStore } from "../store/use-cart-store";
 import { useShallow } from 'zustand/react/shallow'
 export const useCart = (tenantSlug: string) => {
   const {
-    getCartByTenant,
     addProduct,
     removeProduct,
     clearCart,

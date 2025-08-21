@@ -1,4 +1,3 @@
-import { LibraryView } from "@/modules/library/ui/views/library-view"
 
 import { getQueryClient, trpc } from "@/trpc/server"
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
@@ -10,6 +9,8 @@ import { Suspense } from "react";
 interface Props {
     params: Promise<{ productId: string }>
 }
+
+export const dynamic = "force-dynamic"
 
 const LibraryPage = async ({ params }: Props) => {
     const { productId } = await params
