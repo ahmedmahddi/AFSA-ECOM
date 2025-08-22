@@ -8,14 +8,28 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { DEFAULT_BG_COLOR } from "@/modules/home/constans";
 import { BreadcrumbNavigation } from "./breadcrumb-navigation";
+import { useProductFilters } from "@/modules/products/hooks/use-products-filters";
+import { useEffect, useState } from "react";
+import { useDebounce } from "@/hooks/use-debounce";
 
 export const SearchFilters = () => {
+  const [filters, setFilters] = useProductFilters();
+  const [searchInput, setSearchInput] = useState(filters.search || "");
+  const debouncedSearch = useDebounce(searchInput, 300);
+
+  // Update filters when debounced search changes
+  useEffect(() => {
+    setFilters({ search: debouncedSearch });
+  }, [debouncedSearch, setFilters]);
+
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
 
   const params = useParams();
   const categoryParam = (params.category as string) || undefined;
   const activeCategory = categoryParam || "all";
+
+
 
   const activeCategoryData = data.find(
     category => category.slug === activeCategory
@@ -34,7 +48,7 @@ export const SearchFilters = () => {
       className="px-4 lg:px-12 pb-8 pt-25 gap-4 border-b flex flex-col w-full"
       style={{ backgroundColor: activeCategoryColor }}
     >
-      <SearchInput />
+      <SearchInput defaultValue={searchInput} onChange={setSearchInput} />
       <div className="hidden lg:block">
         <Categories data={data} />
       </div>

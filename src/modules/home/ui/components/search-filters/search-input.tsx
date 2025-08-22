@@ -7,29 +7,31 @@ import { Button } from "@/components/ui/button";
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { useProductFilters } from "@/modules/products/hooks/use-products-filters";
-import { useDebounce } from "@/hooks/use-debounce";
+
+import { Skeleton } from "@/components/ui/skeleton";
+
 
 interface Props {
     disabled?: boolean;
+    defaultValue?: string | undefined;
+    onChange?: (value: string) => void;
 
 }
 
-export const SearchInput = ({ disabled }: Props) => {
+export const SearchInput = ({ disabled, defaultValue, onChange }: Props) => {
     const trpc = useTRPC()
     const session = useQuery(trpc.auth.session.queryOptions())
 
-    const [filers, setFilters] = useProductFilters();
-    const [searchInput, setSearchInput] = useState(filers.search);
-    const debouncedSearch = useDebounce(searchInput, 300);
-
+    const [searchInput, setSearchInput] = useState(defaultValue || "");
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-    // Update the URL params when debounced search changes
-    useEffect(() => {
-        setFilters({ search: debouncedSearch });
-    }, [debouncedSearch, setFilters]);
-    
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setSearchInput(value);
+        onChange?.(value);
+    };
+
+
     return (
         <div className="flex items-center gap-2 w-full">
             <CategoriesSidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
@@ -40,7 +42,7 @@ export const SearchInput = ({ disabled }: Props) => {
                     placeholder="Search products"
                     disabled={disabled}
                     value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)}
+                    onChange={handleInputChange}
                 />
             </div>
             <Button variant="elevated" className="size-12 shrink-0 flex lg:hidden" onClick={() => setIsSidebarOpen(true)}>
@@ -58,4 +60,17 @@ export const SearchInput = ({ disabled }: Props) => {
 
         </div>
     )
-} 
+}
+
+export const SearchInputSkeleton = () => {
+    return (
+        <div className="flex items-center gap-2 w-full">
+            <div className="relative w-full">
+                <Skeleton className="h-10 w-full" />
+            </div>
+            <Skeleton className="size-12 shrink-0 flex lg:hidden" />
+            <Skeleton className="h-10 w-24 hidden sm:flex" />
+        </div>
+    )
+}
+
